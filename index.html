@@ -18,9 +18,85 @@
         text-align: center;
         color: #666;
     }
+    #sim {
+        font-family: "Courier New", Courier, monospace;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #666;
+        border-radius: 20px;
+        width: 80vw;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+    }
+    #memory {
+        border-style: solid;
+        border-width: 1px;
+        float: left;
+        margin-left: 5vh;
+        width: 20vw;
+        height: 50vh;
+        background-color: white;
+        text-align: center;
+    }
+    .cell {
+        width: 99%;
+        height: 8%;
+        border-style: solid;
+        border-width: 1px;
+    }
+    .cell-number {
+        display: grid; 
+        align-items: center; 
+        width: 17%; 
+        height: 100%; 
+        float: left; 
+        border-style: solid; 
+        border-width: 1px;
+    }
+    .cell-value {
+        border-style: none; 
+        width: 76%; 
+        height: 86%; 
+        float: right; 
+        background-color: rgba(0,0,0,0);
+    }
+    .control-buttons {
+        width: 10vw;
+        height: 5vh;
+        margin-top: auto;
+        color: white;
+    }
 </style>
 <body>
     <h1>IAS Simulator</h1>
-    <p>The IAS Machine was the first computer to use the <b>von Neumann Architecture</b>. Add instructions to code like von Neumann 😎</p>
+    <p>The IAS Machine was the first computer to use the <b>von Neumann Architecture</b>. Add instructions to code like von Neumann 😎<br />
+    </p>
+    <div id="sim">
+        <div id="pc" style="position: relative; top:10%; margin-left: 50%;">
+            PC:
+            <div id="pc-box" style="display: grid; text-align: center; align-items: center; border-style: solid; border-width: 1px; width: 40px; height:40px;"><span id="pcd">0</span></div>
+        </div>
+        <div id="memory">
+            <p>Memory</p>
+            <div class="cell"><div class="cell-number">1</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">2</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">3</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">4</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">5</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">6</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">7</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">8</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">9</div><input class="cell-value"></input></div>
+            <div class="cell"><div class="cell-number">10</div><input class="cell-value"></input></div>
+        </div>
+        <div style="margin-top: 5vh; text-align: center;">
+            <button class="control-buttons" style="background-color: green;">RUN</button><button class="control-buttons" style="background-color: yellow; color:black">RUN SLOWLY</button>
+        </div>
+    </div>
+    
 </body>
+<script>
+
+</script>
 </html>
