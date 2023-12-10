@@ -77,8 +77,21 @@
             PC:
             <div id="pc-box" style="display: grid; text-align: center; align-items: center; border-style: solid; border-width: 1px; width: 40px; height:40px;"><span id="pcd">0</span></div>
         </div>
+        <div id="ac" style="position: relative; top:10%; margin-left: 80%;">
+            AC:
+            <div id="ac-box" style="display: grid; text-align: center; align-items: center; border-style: solid; border-width: 1px; width: 40px; height:40px;"><span id="acd">0</span></div>
+        </div>
+        <div id="mbr" style="position: relative; top:10%; margin-left: 70%;">
+            MBR:
+            <div id="mbr-box" style="display: grid; text-align: center; align-items: center; border-style: solid; border-width: 1px; width: 40px; height:40px;"><span id="mbrd">0</span></div>
+        </div>
+        <div id="ir" style="position: relative; top:10%; margin-left: 90%;">
+            IR:
+            <div id="ir-box" style="display: grid; text-align: center; align-items: center; border-style: solid; border-width: 1px; width: 40px; height:40px;"><span id="ird">0</span></div>
+        </div>
         <div id="memory">
             <p>Memory</p>
+            <div class="cell"><div class="cell-number">0</div><input class="cell-value"></input></div>
             <div class="cell"><div class="cell-number">1</div><input class="cell-value"></input></div>
             <div class="cell"><div class="cell-number">2</div><input class="cell-value"></input></div>
             <div class="cell"><div class="cell-number">3</div><input class="cell-value"></input></div>
@@ -88,15 +101,84 @@
             <div class="cell"><div class="cell-number">7</div><input class="cell-value"></input></div>
             <div class="cell"><div class="cell-number">8</div><input class="cell-value"></input></div>
             <div class="cell"><div class="cell-number">9</div><input class="cell-value"></input></div>
-            <div class="cell"><div class="cell-number">10</div><input class="cell-value"></input></div>
         </div>
         <div style="margin-top: 5vh; text-align: center;">
-            <button class="control-buttons" style="background-color: green;">RUN</button><button class="control-buttons" style="background-color: yellow; color:black">RUN SLOWLY</button>
+            <button onclick="run()" class="control-buttons" style="background-color: green;">RUN</button><button class="control-buttons" style="background-color: yellow; color:black" onclick="runSlow()">RUN SLOWLY</button>
         </div>
     </div>
     
 </body>
 <script>
+var htmlCells = document.getElementsByClassName("cell");
+var pc = document.getElementById("pcd");
+var ac = document.getElementById("acd");
+var ir = document.getElementById("ird");
+var mbr = document.getElementById("mbrd");
+var pcc = 0;
+function runInstruction(instr) {
+    if (instr.length == undefined || instr.length < 2) {
+        pcc++;
+        return;
+    }
+    ir.innerHTML = instr.substring(0, instr.indexOf(" "));
+    mar = parseInt(instr.charAt(instr.length - 1));
+    console.log(htmlCells[mar].children[1].value);
+    mbrValue = parseInt(htmlCells[mar].children[1].value == "" ? 0 : htmlCells[mar].children[1].value);
+    mbr.innerHTML = mbrValue;
+    acValue = parseInt(ac.innerHTML);
+    switch (ir.innerHTML) {
+        case "add":
+            ac.innerHTML = acValue + mbrValue;
+            break;
+        case "sub":
+            ac.innerHTML = acValue - mbrValue;
+            break;
+        case "mul":
+            ac.innerHTML = acValue * mbrValue;
+            break;
+        case "div":
+            ac.innerHTML = parseInt(acValue / mbrValue);
+            break;
+        case "store":
+            htmlCells[mar].children[1].value = acValue;
+        case "load":
+            ac.innerHTML = mbrValue;
+    }
+    if (ir.innerHTML == "jmp") {
+        pcc = mar;
+        pc.innerHTML = pcc;
+    }
+    else {
+        pcc++;
+    }
+}
 
+function run() {
+    ac.innerHTML = 0;
+    mbr.innerHTML = 0;
+    pcc = 0;
+    while (pcc < htmlCells.length) {
+        pc.innerHTML = pcc;
+        runInstruction(htmlCells[pcc].children[1].value);
+    }
+}
+function runSlow() {
+    ac.innerHTML = 0;
+    mbr.innerHTML = 0;
+    pcc = 0;
+    const rs = setInterval(() => {
+        pc.innerHTML = pcc;
+        if (pcc == htmlCells.length) {
+            clearInterval(rs);
+        }
+        else {
+            for (let i = 0; i < htmlCells.length; i++) {
+                htmlCells[i].style.backgroundColor = "white";
+            }
+            htmlCells[pcc].style.backgroundColor = "red";
+            runInstruction(htmlCells[pcc].children[1].value);
+        }
+    }, 1500);
+}
 </script>
 </html>
